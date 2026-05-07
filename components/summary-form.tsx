@@ -23,6 +23,7 @@ const SUMMARY_TRANSLATIONS: Record<SummaryLang, Record<string, string>> = {
   },
   en: {
     "1. Akcesorium": "1. Device",
+    "2. Zgłaszane zagadnienie": "2. Reported issue",
     "2. Dane kontaktowe (do przesyłki autoklawu)": "2. Contact details (for autoclave shipment)",
     "3. Zgody": "3. Consents",
     "Rodzaj zgłoszenia": "Type of report",
@@ -546,7 +547,7 @@ const SUMMARY_TRANSLATIONS: Record<SummaryLang, Record<string, string>> = {
 }
 function tr(lang: string, text: string): string {
   const L = SUMMARY_TRANSLATIONS[lang as SummaryLang]
-  return (L && L[text]) || text
+  return (L && L[text]) || SUMMARY_TRANSLATIONS.en[text] || text
 }
 
 const formatCountryLabel = (value: string) => {

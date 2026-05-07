@@ -41,6 +41,18 @@ const SUPPORTED_LANGUAGES = ["en", "pl", "es", "fr", "de", "it", "uk", "ru", "pt
 
 type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number]
 
+const LANGUAGE_LABELS: Record<SupportedLanguage, string> = {
+  en: "English",
+  pl: "Polski",
+  es: "Espanol",
+  fr: "Francais",
+  de: "Deutsch",
+  it: "Italiano",
+  uk: "Ukrainian",
+  ru: "Russian",
+  pt: "Portugues",
+}
+
 const HEADING_TRANSLATIONS: Record<SupportedLanguage, string> = {
   pl: "Jak możemy Ci pomóc?",
   en: "How can we help you?",
@@ -67,6 +79,8 @@ const UI_TRANSLATIONS: Record<SupportedLanguage, Record<string, string>> = {
     "Opisz problem...": "Describe the problem...",
     "Inny": "Other",
     "Wystąpił błąd podczas przetwarzania faktury": "An error occurred while processing the invoice",
+    "Wystąpił błąd podczas przesyłania pliku. Spróbuj ponownie.":
+      "An error occurred while uploading the file. Please try again.",
     "Inny adres dostawy": "Different delivery address",
     "Nazwa firmy / nazwa": "Company / name",
     "Adres": "Address",
@@ -426,7 +440,9 @@ const UI_TRANSLATIONS: Record<SupportedLanguage, Record<string, string>> = {
     "2. Dane kontaktowe": "2. Datos de contacto (dirección de envío)",
     "do przesyłki": "para envío",
     "Nazwa firmy": "Nombre de la empresa",
+    "Numer seryjny": "Número de serie",
     "Wpisz nazwę firmy": "Introduce el nombre de la empresa",
+    "Wpisz numer": "Introduce el número de serie",
     "Numer VAT": "Número de IVA",
     "Wpisz numer VAT": "Introduce el número de IVA",
     "Imię i nazwisko": "Nombre y apellidos",
@@ -572,7 +588,9 @@ const UI_TRANSLATIONS: Record<SupportedLanguage, Record<string, string>> = {
     "2. Dane kontaktowe": "2. Kontaktdaten (Lieferadresse)",
     "do przesyłki": "für den Versand",
     "Nazwa firmy": "Firmenname",
+    "Numer seryjny": "Seriennummer",
     "Wpisz nazwę firmy": "Firmenname eingeben",
+    "Wpisz numer": "Seriennummer eingeben",
     "Numer VAT": "USt-IdNr.",
     "Wpisz numer VAT": "USt-IdNr. eingeben",
     "Imię i nazwisko": "Vor- und Nachname",
@@ -720,7 +738,9 @@ const UI_TRANSLATIONS: Record<SupportedLanguage, Record<string, string>> = {
     "2. Dane kontaktowe": "2. Dati di contatto (indirizzo di consegna)",
     "do przesyłki": "per la spedizione",
     "Nazwa firmy": "Nome azienda",
+    "Numer seryjny": "Numero di serie",
     "Wpisz nazwę firmy": "Inserisci il nome dell'azienda",
+    "Wpisz numer": "Inserisci il numero di serie",
     "Numer VAT": "Partita IVA",
     "Wpisz numer VAT": "Inserisci la partita IVA",
     "Imię i nazwisko": "Nome e cognome",
@@ -865,7 +885,9 @@ const UI_TRANSLATIONS: Record<SupportedLanguage, Record<string, string>> = {
     "2. Dane kontaktowe": "2. Контактні дані (адреса доставки)",
     "do przesyłki": "для відправки",
     "Nazwa firmy": "Назва компанії",
+    "Numer seryjny": "Серійний номер",
     "Wpisz nazwę firmy": "Введіть назву компанії",
+    "Wpisz numer": "Введіть серійний номер",
     "Numer VAT": "ІПН",
     "Wpisz numer VAT": "Введіть ІПН",
     "Imię i nazwisko": "Ім'я та прізвище",
@@ -1010,7 +1032,9 @@ const UI_TRANSLATIONS: Record<SupportedLanguage, Record<string, string>> = {
     "2. Dane kontaktowe": "2. Контактные данные (адрес доставки)",
     "do przesyłki": "для отправки",
     "Nazwa firmy": "Название компании",
+    "Numer seryjny": "Серийный номер",
     "Wpisz nazwę firmy": "Введите название компании",
+    "Wpisz numer": "Введите серийный номер",
     "Numer VAT": "ИНН",
     "Wpisz numer VAT": "Введите ИНН",
     "Imię i nazwisko": "Имя и фамилия",
@@ -1056,7 +1080,7 @@ const UI_TRANSLATIONS: Record<SupportedLanguage, Record<string, string>> = {
       "Добавьте фото счёта или гарантийного документа.",
     "Imię i nazwisko jest wymagane.": "Имя и фамилия обязательны.",
     "Adres e-mail jest wymagany.": "Эл. почта обязательна.",
-    "Numer телефона jest wymagany.": "Номер телефона обязателен.",
+    "Numer telefonu jest wymagany.": "Номер телефона обязателен.",
     "Numer seryjny jest wymagany.": "Серийный номер обязателен.",
     "Nazwa ulicy jest wymagana.": "Улица обязательна.",
     "Numer budynku jest wymagany.": "Номер дома обязателен.",
@@ -1147,6 +1171,8 @@ const UI_TRANSLATIONS: Record<SupportedLanguage, Record<string, string>> = {
     "Warunki przeglądu różnią się w zależności od kraju.": "As condições de revisão variam consoante o país.",
     "Aby sprawdzić szczegóły dotyczące przeglądu, skorzystaj z dokumentacji.":
       "Para verificar os detalhes da revisão, consulte a documentação:",
+    "Aby sprawdzić szczegóły dotyczące przeglądu, skorzystaj z dokumentacji:":
+      "Para verificar os detalhes da revisão, consulte a documentação:",
     'Pendrive dołączony do urządzenia → plik "Warunki gwarancji" lub':
       'Pen USB fornecida com o dispositivo → ficheiro "Condições de garantia" ou',
     'Pendrive dołączony do urządzenia → plik "Instrukcja użytkownika" lub':
@@ -1155,7 +1181,9 @@ const UI_TRANSLATIONS: Record<SupportedLanguage, Record<string, string>> = {
     "2. Dane kontaktowe": "2. Dados de contacto (endereço de entrega)",
     "do przesyłki": "para envio",
     "Nazwa firmy": "Nome da empresa",
+    "Numer seryjny": "Número de série",
     "Wpisz nazwę firmy": "Introduza o nome da empresa",
+    "Wpisz numer": "Introduza o número de série",
     "Numer VAT": "NIF",
     "Wpisz numer VAT": "Introduza o NIF",
     "Imię i nazwisko": "Nome e apelido",
@@ -1243,7 +1271,7 @@ const UI_TRANSLATIONS: Record<SupportedLanguage, Record<string, string>> = {
 }
 
 const tr = (language: SupportedLanguage, text: string) =>
-  UI_TRANSLATIONS[language][text] ?? text
+  UI_TRANSLATIONS[language][text] ?? UI_TRANSLATIONS.en[text] ?? text
 
 const NAMED_ERRORS = [
   "Błąd wyświetlacza",
@@ -1332,6 +1360,17 @@ export default function NewComplaintForm() {
     (urlLangParam && SUPPORTED_LANGUAGES.includes(urlLangParam as SupportedLanguage)
       ? (urlLangParam as SupportedLanguage)
       : "en")
+
+  const handleLanguageChange = (nextLanguage: SupportedLanguage) => {
+    const params = new URLSearchParams(searchParams.toString())
+    if (nextLanguage === "en") {
+      params.delete("lang")
+    } else {
+      params.set("lang", nextLanguage)
+    }
+    const nextQuery = params.toString()
+    router.push(nextQuery ? `/?${nextQuery}` : "/")
+  }
 
   useEffect(() => {
     if (typeof document !== "undefined") {
@@ -1857,6 +1896,21 @@ export default function NewComplaintForm() {
   const handleFinalSubmit = async (event:any) => {
     event.preventDefault()
     if (isSubmitting) return
+
+    const customerName = (summaryData?.name || "").trim()
+    const autoclaveNumber = (summaryData?.serialNumber || "").trim()
+    const validationErrors: string[] = []
+
+    if (!customerName) {
+      validationErrors.push(tr(language, "Imię i nazwisko jest wymagane."))
+    }
+    if (selectedCategory === "autoclave" && !autoclaveNumber) {
+      validationErrors.push(tr(language, "Numer seryjny jest wymagany."))
+    }
+    if (validationErrors.length > 0) {
+      alert(validationErrors.join("\n"))
+      return
+    }
 
     setIsSubmitting(true)
     console.log("Wysyłanie danych do serwera:", summaryData)
@@ -2718,7 +2772,7 @@ export default function NewComplaintForm() {
                 {selectedCategory === "autoclave" && (
                   <div>
                     <Label htmlFor="serialNumber" className="text-gray-900 text-[14px] font-normal mb-2 block">
-                      {tr(language, "Numer seryjny")}
+                      {tr(language, "Numer seryjny")} <span className="text-red-500">*</span>
                     </Label>
                     <Input
                         id="serialNumber"
@@ -2768,7 +2822,7 @@ export default function NewComplaintForm() {
 
                 <div>
                   <Label htmlFor="name" className="text-gray-900 text-[14px] font-normal mb-2 block">
-                    {tr(language, "Imię i nazwisko")}
+                    {tr(language, "Imię i nazwisko")} <span className="text-red-500">*</span>
                   </Label>
                   <Input
                       id="name"
@@ -2783,7 +2837,7 @@ export default function NewComplaintForm() {
 
                 <div>
                   <Label htmlFor="email" className="text-gray-900 text-[14px] font-normal mb-2 block">
-                    {tr(language, "Adres e-mail")}
+                    {tr(language, "Adres e-mail")} <span className="text-red-500">*</span>
                   </Label>
                   <Input
                       id="email"
@@ -2799,7 +2853,7 @@ export default function NewComplaintForm() {
 
                 <div>
                   <Label htmlFor="phone" className="text-gray-900 text-[14px] font-normal mb-2 block">
-                    {tr(language, "Telefon")}
+                    {tr(language, "Telefon")} <span className="text-red-500">*</span>
                   </Label>
                   <div className="flex gap-2 items-stretch">
                     <div className="w-20 shrink-0">
@@ -2829,7 +2883,7 @@ export default function NewComplaintForm() {
 
                 <div>
                   <Label htmlFor="street" className="text-gray-900 text-[14px] font-normal mb-2 block">
-                    {tr(language, "Nazwa ulicy")}
+                    {tr(language, "Nazwa ulicy")} <span className="text-red-500">*</span>
                   </Label>
                   <Input
                       id="street"
@@ -2845,7 +2899,7 @@ export default function NewComplaintForm() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="buildingNumber" className="text-gray-900 text-[14px] font-normal mb-2 block">
-                      {tr(language, "Numer budynku")}
+                      {tr(language, "Numer budynku")} <span className="text-red-500">*</span>
                     </Label>
                     <Input
                         id="buildingNumber"
@@ -2876,7 +2930,7 @@ export default function NewComplaintForm() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="postalCode" className="text-gray-900 text-[14px] font-normal mb-2 block">
-                      {tr(language, "Kod pocztowy")}
+                      {tr(language, "Kod pocztowy")} <span className="text-red-500">*</span>
                     </Label>
                     <Input
                         id="postalCode"
@@ -2891,7 +2945,7 @@ export default function NewComplaintForm() {
 
                   <div>
                     <Label htmlFor="city" className="text-gray-900 text-[14px] font-normal mb-2 block">
-                      {tr(language, "Miasto")}
+                      {tr(language, "Miasto")} <span className="text-red-500">*</span>
                     </Label>
                     <Input
                         id="city"
@@ -2907,7 +2961,7 @@ export default function NewComplaintForm() {
 
                 <div>
                   <Label htmlFor="country" className="text-gray-900 text-[14px] font-normal mb-2 block">
-                    {tr(language, "Kraj")}
+                    {tr(language, "Kraj")} <span className="text-red-500">*</span>
                   </Label>
                   <Select
                       value={formData.country}
@@ -3472,7 +3526,7 @@ export default function NewComplaintForm() {
                 {selectedCategory === "accessory" && (
                   <div>
                     <Label htmlFor="serialNumber" className="text-gray-900 text-[14px] font-normal mb-2 block">
-                      {tr(language, "Numer seryjny")}
+                      {tr(language, "Numer seryjny")} <span className="text-red-500">*</span>
                     </Label>
                     <Input
                         id="serialNumber"
@@ -3488,7 +3542,7 @@ export default function NewComplaintForm() {
 
                 <div>
                   <Label htmlFor="name" className="text-gray-900 text-[14px] font-normal mb-2 block">
-                    {tr(language, "Imię i nazwisko")}
+                    {tr(language, "Imię i nazwisko")} <span className="text-red-500">*</span>
                   </Label>
                   <Input
                       id="name"
@@ -3503,7 +3557,7 @@ export default function NewComplaintForm() {
 
                 <div>
                   <Label htmlFor="email" className="text-gray-900 text-[14px] font-normal mb-2 block">
-                    {tr(language, "Adres e-mail")}
+                    {tr(language, "Adres e-mail")} <span className="text-red-500">*</span>
                   </Label>
                   <Input
                       id="email"
@@ -3519,7 +3573,7 @@ export default function NewComplaintForm() {
 
                 <div>
                   <Label htmlFor="phone" className="text-gray-900 text-[14px] font-normal mb-2 block">
-                    {tr(language, "Telefon")}
+                    {tr(language, "Telefon")} <span className="text-red-500">*</span>
                   </Label>
                   <div className="flex gap-2 items-stretch">
                     <div className="w-20 shrink-0">
@@ -3549,7 +3603,7 @@ export default function NewComplaintForm() {
 
                 <div>
                   <Label htmlFor="street" className="text-gray-900 text-[14px] font-normal mb-2 block">
-                    {tr(language, "Nazwa ulicy")}
+                    {tr(language, "Nazwa ulicy")} <span className="text-red-500">*</span>
                   </Label>
                   <Input
                       id="street"
@@ -3565,7 +3619,7 @@ export default function NewComplaintForm() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="buildingNumber" className="text-gray-900 text-[14px] font-normal mb-2 block">
-                      {tr(language, "Numer budynku")}
+                      {tr(language, "Numer budynku")} <span className="text-red-500">*</span>
                     </Label>
                     <Input
                         id="buildingNumber"
@@ -3596,7 +3650,7 @@ export default function NewComplaintForm() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="postalCode" className="text-gray-900 text-[14px] font-normal mb-2 block">
-                      Kod pocztowy
+                      {tr(language, "Kod pocztowy")} <span className="text-red-500">*</span>
                     </Label>
                     <Input
                         id="postalCode"
@@ -3611,7 +3665,7 @@ export default function NewComplaintForm() {
 
                   <div>
                     <Label htmlFor="city" className="text-gray-900 text-[14px] font-normal mb-2 block">
-                      Miasto
+                      {tr(language, "Miasto")} <span className="text-red-500">*</span>
                     </Label>
                     <Input
                         id="city"
@@ -3627,7 +3681,7 @@ export default function NewComplaintForm() {
 
                 <div>
                   <Label htmlFor="country" className="text-gray-900 text-[14px] font-normal mb-2 block">
-                    {tr(language, "Kraj")}
+                    {tr(language, "Kraj")} <span className="text-red-500">*</span>
                   </Label>
                   <Select
                       value={formData.country}
@@ -3689,6 +3743,24 @@ export default function NewComplaintForm() {
   return (
       <div className="min-h-screen bg-gray-100 text-gray-900 py-4 sm:py-6 md:py-8">
         <div className="w-full max-w-[1035px] mx-auto px-4 sm:px-6">
+          <div className="flex justify-end mb-4">
+            <Select value={language} onValueChange={(value) => handleLanguageChange(value as SupportedLanguage)}>
+              <SelectTrigger className="w-[150px] h-10 bg-gray-100 border-gray-200 text-gray-900 rounded-md">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="bg-white border border-gray-200">
+                {SUPPORTED_LANGUAGES.map((langCode) => (
+                  <SelectItem
+                    key={langCode}
+                    value={langCode}
+                    className="text-gray-700 data-[state=checked]:text-gray-900 data-[highlighted]:text-gray-900 data-[highlighted]:bg-gray-100"
+                  >
+                    {LANGUAGE_LABELS[langCode]}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
           <h1 className="text-gray-900 text-center text-xl sm:text-2xl font-medium mb-6 sm:mb-8">
             {currentStep === "summary"
               ? tr(language, "Dane rozpoznane z faktury, sprawdź poprawność")
