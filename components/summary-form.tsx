@@ -546,6 +546,7 @@ const SUMMARY_TRANSLATIONS: Record<SummaryLang, Record<string, string>> = {
   },
 }
 function tr(lang: string, text: string): string {
+  if (lang === "pl") return text
   const L = SUMMARY_TRANSLATIONS[lang as SummaryLang]
   return (L && L[text]) || SUMMARY_TRANSLATIONS.en[text] || text
 }

@@ -1270,8 +1270,10 @@ const UI_TRANSLATIONS: Record<SupportedLanguage, Record<string, string>> = {
   },
 }
 
-const tr = (language: SupportedLanguage, text: string) =>
-  UI_TRANSLATIONS[language][text] ?? UI_TRANSLATIONS.en[text] ?? text
+const tr = (language: SupportedLanguage, text: string) => {
+  if (language === "pl") return text
+  return UI_TRANSLATIONS[language][text] ?? UI_TRANSLATIONS.en[text] ?? text
+}
 
 const NAMED_ERRORS = [
   "Błąd wyświetlacza",
