@@ -14,7 +14,6 @@ import { ChevronDown, Info, ArrowLeft, Paperclip, Camera, Folder, X, Download, T
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger, TooltipArrow } from "@/components/ui/tooltip"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import { Switch } from "@/components/ui/switch"
-import { useMeasureHeight } from "@/hooks/use-measure-height"
 import SummaryForm from "@/components/summary-form"
 import { COUNTRY_NAMES_PL } from "@/lib/form-data"
 
@@ -199,6 +198,8 @@ const UI_TRANSLATIONS: Record<SupportedLanguage, Record<string, string>> = {
     "Adres e-mail jest wymagany.": "E-mail address is required.",
     "Numer telefonu jest wymagany.": "Phone number is required.",
     "Numer seryjny jest wymagany.": "Serial number is required.",
+    "Nazwa firmy jest wymagana.": "Company name is required.",
+    "Numer VAT jest wymagany.": "VAT number is required.",
     "Nazwa ulicy jest wymagana.": "Street name is required.",
     "Numer budynku jest wymagany.": "Building number is required.",
     "Kod pocztowy jest wymagany.": "Postal code is required.",
@@ -350,6 +351,8 @@ const UI_TRANSLATIONS: Record<SupportedLanguage, Record<string, string>> = {
     "Adres e-mail jest wymagany.": "L’adresse e‑mail est obligatoire.",
     "Numer telefonu jest wymagany.": "Le numéro de téléphone est obligatoire.",
     "Numer seryjny jest wymagany.": "Le numéro de série est obligatoire.",
+    "Nazwa firmy jest wymagana.": "Le nom de l’entreprise est obligatoire.",
+    "Numer VAT jest wymagany.": "Le numéro de TVA est obligatoire.",
     "Nazwa ulicy jest wymagana.": "Le nom de la rue est obligatoire.",
     "Numer budynku jest wymagany.": "Le numéro du bâtiment est obligatoire.",
     "Kod pocztowy jest wymagany.": "Le code postal est obligatoire.",
@@ -504,6 +507,8 @@ const UI_TRANSLATIONS: Record<SupportedLanguage, Record<string, string>> = {
     "Adres e-mail jest wymagany.": "La dirección de correo electrónico es obligatoria.",
     "Numer telefonu jest wymagany.": "El número de teléfono es obligatorio.",
     "Numer seryjny jest wymagany.": "El número de serie es obligatorio.",
+    "Nazwa firmy jest wymagana.": "El nombre de la empresa es obligatorio.",
+    "Numer VAT jest wymagany.": "El número de IVA es obligatorio.",
     "Nazwa ulicy jest wymagana.": "El nombre de la calle es obligatorio.",
     "Numer budynku jest wymagany.": "El número del edificio es obligatorio.",
     "Kod pocztowy jest wymagany.": "El código postal es obligatorio.",
@@ -638,6 +643,8 @@ const UI_TRANSLATIONS: Record<SupportedLanguage, Record<string, string>> = {
     "Adres e-mail jest wymagany.": "E-Mail-Adresse ist erforderlich.",
     "Numer telefonu jest wymagany.": "Telefonnummer ist erforderlich.",
     "Numer seryjny jest wymagany.": "Seriennummer ist erforderlich.",
+    "Nazwa firmy jest wymagana.": "Firmenname ist erforderlich.",
+    "Numer VAT jest wymagany.": "USt-IdNr. ist erforderlich.",
     "Nazwa ulicy jest wymagana.": "Straße ist erforderlich.",
     "Numer budynku jest wymagany.": "Hausnummer ist erforderlich.",
     "Kod pocztowy jest wymagany.": "Postleitzahl ist erforderlich.",
@@ -788,6 +795,8 @@ const UI_TRANSLATIONS: Record<SupportedLanguage, Record<string, string>> = {
     "Adres e-mail jest wymagany.": "Indirizzo e-mail obbligatorio.",
     "Numer telefonu jest wymagany.": "Numero di telefono obbligatorio.",
     "Numer seryjny jest wymagany.": "Numero di serie obbligatorio.",
+    "Nazwa firmy jest wymagana.": "Ragione sociale obbligatoria.",
+    "Numer VAT jest wymagany.": "Partita IVA obbligatoria.",
     "Nazwa ulicy jest wymagana.": "Via obbligatoria.",
     "Numer budynku jest wymagany.": "Numero civico obbligatorio.",
     "Kod pocztowy jest wymagany.": "CAP obbligatorio.",
@@ -935,6 +944,8 @@ const UI_TRANSLATIONS: Record<SupportedLanguage, Record<string, string>> = {
     "Adres e-mail jest wymagany.": "Ел. пошта обов'язкова.",
     "Numer telefonu jest wymagany.": "Номер телефону обов'язковий.",
     "Numer seryjny jest wymagany.": "Серійний номер обов'язковий.",
+    "Nazwa firmy jest wymagana.": "Назва компанії обов'язкова.",
+    "Numer VAT jest wymagany.": "Номер ПДВ обов'язковий.",
     "Nazwa ulicy jest wymagana.": "Вулиця обов'язкова.",
     "Numer budynku jest wymagany.": "Номер будинку обов'язковий.",
     "Kod pocztowy jest wymagany.": "Поштовий індекс обов'язковий.",
@@ -1082,6 +1093,8 @@ const UI_TRANSLATIONS: Record<SupportedLanguage, Record<string, string>> = {
     "Adres e-mail jest wymagany.": "Эл. почта обязательна.",
     "Numer telefonu jest wymagany.": "Номер телефона обязателен.",
     "Numer seryjny jest wymagany.": "Серийный номер обязателен.",
+    "Nazwa firmy jest wymagana.": "Название компании обязательно.",
+    "Numer VAT jest wymagany.": "Номер НДС обязателен.",
     "Nazwa ulicy jest wymagana.": "Улица обязательна.",
     "Numer budynku jest wymagany.": "Номер дома обязателен.",
     "Kod pocztowy jest wymagany.": "Почтовый индекс обязателен.",
@@ -1232,6 +1245,8 @@ const UI_TRANSLATIONS: Record<SupportedLanguage, Record<string, string>> = {
     "Adres e-mail jest wymagany.": "O endereço de e‑mail é obrigatório.",
     "Numer telefonu jest wymagany.": "O número de telefone é obrigatório.",
     "Numer seryjny jest wymagany.": "O número de série é obrigatório.",
+    "Nazwa firmy jest wymagana.": "O nome da empresa é obrigatório.",
+    "Numer VAT jest wymagany.": "O número de IVA é obrigatório.",
     "Nazwa ulicy jest wymagana.": "O nome da rua é obrigatório.",
     "Numer budynku jest wymagany.": "O número da porta é obrigatório.",
     "Kod pocztowy jest wymagany.": "O código postal é obrigatório.",
@@ -1350,7 +1365,6 @@ export default function NewComplaintForm() {
     originalFolder?: string
     zipFileName?: string
   } | null>(null)
-  const { ref: contentRef, height: contentHeight } = useMeasureHeight()
   const [summaryData,setSummaryData]: any = useState({
     formId: "",
     attachment1: null,
@@ -1417,8 +1431,8 @@ export default function NewComplaintForm() {
     postalCode: "",
     city: "",
     country: "",
-    companyName: "", // For post-warranty service
-    vatNumber: "", // For post-warranty service
+    companyName: "",
+    vatNumber: "",
     // Other delivery address
     otherDeliveryAddress: false,
     deliveryCompanyName: "",
@@ -1758,6 +1772,17 @@ export default function NewComplaintForm() {
       newFieldErrors.serialNumber = true
     }
 
+    if (selectedCategory === "autoclave") {
+      if (!formData.companyName?.trim()) {
+        errors.push(tr(language, "Nazwa firmy jest wymagana."))
+        newFieldErrors.companyName = true
+      }
+      if (!formData.vatNumber?.trim()) {
+        errors.push(tr(language, "Numer VAT jest wymagany."))
+        newFieldErrors.vatNumber = true
+      }
+    }
+
     if (!formData.name.trim()) {
       errors.push(tr(language, "Imię i nazwisko jest wymagane."))
       newFieldErrors.name = true
@@ -1908,6 +1933,14 @@ export default function NewComplaintForm() {
     }
     if (selectedCategory === "autoclave" && !autoclaveNumber) {
       validationErrors.push(tr(language, "Numer seryjny jest wymagany."))
+    }
+    if (selectedCategory === "autoclave") {
+      if (!(summaryData?.companyName || "").trim()) {
+        validationErrors.push(tr(language, "Nazwa firmy jest wymagana."))
+      }
+      if (!(summaryData?.vatNumber || "").trim()) {
+        validationErrors.push(tr(language, "Numer VAT jest wymagany."))
+      }
     }
     if (validationErrors.length > 0) {
       alert(validationErrors.join("\n"))
@@ -2788,13 +2821,12 @@ export default function NewComplaintForm() {
                   </div>
                 )}
 
-                {/* Company fields for post-warranty service with autoclave products */}
-                {serviceType === "post-warranty" && 
-                 selectedCategory === "autoclave" && (
+                {/* Company fields for autoclave service */}
+                {selectedCategory === "autoclave" && (
                   <>
                     <div>
                       <Label htmlFor="companyName" className="text-gray-900 text-[14px] font-normal mb-2 block">
-                        {tr(language, "Nazwa firmy")}
+                        {tr(language, "Nazwa firmy")} <span className="text-red-500">*</span>
                       </Label>
                       <Input
                           id="companyName"
@@ -2802,13 +2834,14 @@ export default function NewComplaintForm() {
                           value={formData.companyName || ""}
                           onChange={(e) => handleInputChange("companyName", e.target.value)}
                           placeholder={tr(language, "Wpisz nazwę firmy")}
-                          className={getInputStyles(formData.companyName || "")}
+                          className={getInputStyles(formData.companyName || "", fieldErrors.companyName)}
+                          required
                       />
                     </div>
 
                     <div>
                       <Label htmlFor="vatNumber" className="text-gray-900 text-[14px] font-normal mb-2 block">
-                        {tr(language, "Numer VAT")}
+                        {tr(language, "Numer VAT")} <span className="text-red-500">*</span>
                       </Label>
                       <Input
                           id="vatNumber"
@@ -2816,7 +2849,8 @@ export default function NewComplaintForm() {
                           value={formData.vatNumber || ""}
                           onChange={(e) => handleInputChange("vatNumber", e.target.value)}
                           placeholder={tr(language, "Wpisz numer VAT")}
-                          className={getInputStyles(formData.vatNumber || "")}
+                          className={getInputStyles(formData.vatNumber || "", fieldErrors.vatNumber)}
+                          required
                       />
                     </div>
                   </>
@@ -3770,13 +3804,14 @@ export default function NewComplaintForm() {
           </h1>
 
           <div
-              className="overflow-hidden transition-all duration-300 ease-in-out"
+              className="overflow-hidden transition-opacity duration-300 ease-in-out"
               style={{
-                height: isTransitioning ? 0 : contentHeight || "auto",
+                /* Stała wysokość z pomiaru + overflow-hidden obcinała treść, gdy pomiar był zaniżony (ResizeObserver / timing layoutu). */
+                height: isTransitioning ? 0 : "auto",
                 opacity: isTransitioning ? 0 : 1,
               }}
           >
-            <div ref={contentRef}>
+            <div>
               {currentStep === "product-selection" && renderProductSelection()}
               {currentStep === "service-selection" && renderServiceSelection()}
               {currentStep === "service-form" && renderServiceForm()}

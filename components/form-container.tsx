@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation"
 import SupportForm from "@/components/support-form-content"
 import WarrantyForm from "@/components/warranty-form-content"
 import SummaryForm from "@/components/summary-form"
-import { useMeasureHeight } from "@/hooks/use-measure-height"
 import { ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
@@ -18,9 +17,6 @@ export default function FormContainer() {
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [showContent, setShowContent] = useState(true)
   const [isSubmitting, setIsSubmitting] = useState(false) // Local state for submitting
-
-  // Use our custom hook to measure content height
-  const { ref: contentRef, height: contentHeight } = useMeasureHeight()
 
   // Render the appropriate content based on the step
   const renderContent = (step: FormStep) => {
@@ -116,25 +112,16 @@ export default function FormContainer() {
     }
   }
 
-  // Calculate the maximum height for the container
-  const containerHeight = contentHeight ? contentHeight + 96 : "auto" // Add padding (12px * 8 = 96px) for p-12
-
   return (
     <div className="flex min-h-screen flex-col items-center bg-gray-50 p-4 pt-20">
       {/* Render main title dynamically based on current step */}
       {renderMainTitle()}
 
-      <div
-        className="w-[1080px] mx-auto bg-white rounded-xl border border-gray-200 overflow-hidden transition-[height] duration-300 ease-in-out"
-        style={{
-          height: containerHeight !== "auto" ? `${containerHeight}px` : "auto",
-        }}
-      >
+      <div className="w-[1080px] mx-auto bg-white rounded-xl border border-gray-200 overflow-hidden">
         {/* Main content area */}
         <div className="p-12 h-full">
           {/* Content with transition */}
           <div
-            ref={contentRef}
             className={`transition-opacity duration-200 ${showContent ? "ease-in" : "ease-out"}`}
             style={{
               opacity: showContent ? 1 : 0,
