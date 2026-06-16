@@ -1760,10 +1760,6 @@ export default function NewComplaintForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (selectedCategory === "autoclave" && serviceType === "warranty" && fileUploadProgress !== 100) {
-      alert(tr(language, "Proszę dodać zdjęcie faktury lub świadectwa gwarancji."))
-      return
-    }
     const errors: string[] = []
     const newFieldErrors: Record<string, boolean> = {}
 
@@ -2597,19 +2593,7 @@ export default function NewComplaintForm() {
 
                 <div className="border-t border-gray-200 pt-6 sm:pt-8 mt-4 sm:mt-6">
                   <div className="space-y-8 sm:space-y-11">
-                    {/* Proof of Purchase (Conditional for Warranty) */}
-                    {serviceType === "warranty" &&
-                        renderFileUploadSection(
-                            formData.serviceUploadedFile,
-                            handleServiceFileUpload,
-                            handleFileDelete,
-                            handleFileDownload,
-                            "Dane z faktury zostały rozpoznane i będą użyte w formularzu.",
-                            "Dodaj zdjęcie faktury lub dokumentu gwarancyjnego",
-                            isUploading,
-                            uploadProgress,
-                            true, // This field is now required
-                        )}
+                    {/* Proof of Purchase – ukryte */}
 
                     {/* Error Numbers or Comments (currently disabled for all service types) */}
                     {false && (
