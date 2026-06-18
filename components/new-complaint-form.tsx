@@ -97,8 +97,6 @@ const UI_TRANSLATIONS: Record<SupportedLanguage, Record<string, string>> = {
     "zrób zdjęcie": "take a photo",
     "Dane z faktury zostały rozpoznane i będą użyte w formularzu.":
       "Data from the invoice has been recognized and will be used in the form.",
-    "Plik został przesłany.": "File uploaded successfully.",
-    "Przesyłanie pliku...": "Uploading file...",
     "Dozwolone formaty: JPG, PDF": "Allowed formats: JPG, PDF",
     "Maksymalny rozmiar: 10 MB": "Maximum size: 10 MB",
     "Dodaj folder autokławu": "Add autoclave folder",
@@ -1613,7 +1611,6 @@ export default function NewComplaintForm() {
     setInvoiceData(null);
     setFileUploadProgress(0);
     setIsFileUploading(false);
-    setFormData((prev) => ({ ...prev, serviceUploadedFile: null }));
     const fileInput = document.getElementById('fileUpload') as HTMLInputElement;
     if (fileInput) fileInput.value = '';
   };
@@ -1652,7 +1649,6 @@ export default function NewComplaintForm() {
           formData.append("formId", storedFormId)
         }
         formData.append("file", file)
-        formData.append("skipOcr", "true")
 
         // Symulacja postępu uploadu
         const progressInterval = setInterval(() => {
@@ -1681,13 +1677,19 @@ export default function NewComplaintForm() {
           if (result.success === false) {
             setFileUploadStatus({
               success: false,
-              error: result.error || tr(language, "Wystąpił błąd podczas przesyłania pliku. Spróbuj ponownie."),
+              error: result.error || tr(language, "Wystąpił błąd podczas przetwarzania faktury"),
             })
           } else {
-            setFormData((prev) => ({ ...prev, serviceUploadedFile: file }))
+            // Zapisz dane faktury
+            console.log("Otrzymane dane faktury:", result) // Dodaj logowanie
+            setInvoiceData(result)
             setFileUploadStatus({
               success: true,
             })
+
+            // Jeśli mamy dane nabywcy, uzupełnij formularz
+            console.log(result.data)
+            console.log(fileUploadStatus)
           }
         } else {
           const errorData = await response.json().catch(() => ({}))
@@ -2064,8 +2066,7 @@ export default function NewComplaintForm() {
       tooltipContent: string,
       isCurrentlyUploading: boolean,
       currentUploadProgress: number,
-      isRequired: boolean,
-      uploadWithoutOcr = false,
+      isRequired: boolean, // New prop for required
   ) => {
     const fileInputId = `file-upload-${Math.random().toString(36).substring(7)}` // Unique ID for input
 
@@ -2102,22 +2103,17 @@ export default function NewComplaintForm() {
                     type="file"
                     id="fileUpload"
                     accept=".jpg,.jpeg,.png,.pdf"
-                    onChange={onFileUpload}
+                    onChange={handleServiceFileUpload}
                     className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
                     disabled={isFileUploading}
-                    required={isRequired}
+                     required
                 />
                 <div className="flex items-center justify-center gap-2 text-gray-600 text-sm w-full">
                   {isFileUploading ? (
                       <div className="w-full">
                         <div className="flex items-center justify-between mb-2">
                           <span className="text-gray-900">
-                            {tr(
-                              language,
-                              uploadWithoutOcr
-                                ? "Przesyłanie pliku..."
-                                : "Przetwarzanie faktury..."
-                            )}
+                            {tr(language, "Przetwarzanie faktury...")}
                           </span>
                           <span className="text-gray-900">{fileUploadProgress}%</span>
                         </div>
@@ -2162,13 +2158,7 @@ export default function NewComplaintForm() {
                   </div>
               )}
 
-              {fileUploadStatus?.success && (
-                  <div className="mt-2 text-sm text-green-500">
-                    {tr(language, successMessage)}
-                  </div>
-              )}
-
-              {invoiceData && !uploadWithoutOcr && (
+              {invoiceData && (
                   <div className="mt-2 text-sm text-green-500">
                     {tr(
                       language,
@@ -2603,19 +2593,7 @@ export default function NewComplaintForm() {
 
                 <div className="border-t border-gray-200 pt-6 sm:pt-8 mt-4 sm:mt-6">
                   <div className="space-y-8 sm:space-y-11">
-                    {serviceType === "warranty" &&
-                        renderFileUploadSection(
-                            formData.serviceUploadedFile,
-                            handleServiceFileUpload,
-                            handleFileDelete,
-                            handleFileDownload,
-                            "Plik został przesłany.",
-                            "Dodaj zdjęcie faktury lub dokumentu gwarancyjnego",
-                            isFileUploading,
-                            fileUploadProgress,
-                            false,
-                            true,
-                        )}
+                    {/* Proof of Purchase – ukryte */}
 
                     {/* Error Numbers or Comments (currently disabled for all service types) */}
                     {false && (
