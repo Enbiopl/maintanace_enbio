@@ -10,8 +10,8 @@ const EXTERNAL_URL =
 
 /**
  * Jeden endpoint:
- * - domyślnie: OCR przez `process_invoice.php` + zapis na Google Drive,
- * - z `skipOcr=true`: tylko zapis pliku na Google Drive (bez OCR).
+ * - wysyła plik do zewnętrznego `process_invoice.php` (OCR / parsowanie),
+ * - równolegle zapisuje fakturę w Google Drive przez Google Apps Script.
  */
 export async function POST(request: NextRequest) {
   try {
@@ -25,7 +25,6 @@ export async function POST(request: NextRequest) {
     }
 
     const formIdValue = formData.get("formId")
-    const skipOcr = formData.get("skipOcr") === "true"
     const arrayBuffer = await file.arrayBuffer()
     const base64Data = Buffer.from(arrayBuffer).toString("base64")
     const now = new Date()
@@ -36,53 +35,6 @@ export async function POST(request: NextRequest) {
       typeof formIdValue === "string" && formIdValue.trim().length > 0
         ? formIdValue
         : defaultSubfolder
-
-    const googlePayload = {
-      fileName: file.name,
-      mimeType: file.type || "application/octet-stream",
-      base64Data,
-      subfolder,
-    }
-
-    if (skipOcr) {
-      const googleResponse = await fetch(GOOGLE_SCRIPT_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(googlePayload),
-      }).catch((err) => {
-        console.error("Google Script upload error:", err)
-        return null
-      })
-
-      if (!googleResponse || !googleResponse.ok) {
-        return NextResponse.json(
-          {
-            success: false,
-            error:
-              "Nie udało się zapisać pliku. Spróbuj ponownie za chwilę.",
-          },
-          { status: 502 },
-        )
-      }
-
-      let googleData: unknown = null
-      try {
-        googleData = await googleResponse.json()
-      } catch {
-        googleData = await googleResponse.text().catch(() => null)
-      }
-
-      return NextResponse.json(
-        {
-          success: true,
-          ocrSkipped: true,
-          google: googleData,
-        },
-        { status: 200 },
-      )
-    }
 
     // 1) Wyślij do PHP process_invoice.php
     const proxyFormData = new FormData()
@@ -109,6 +61,13 @@ export async function POST(request: NextRequest) {
     })
 
     // 2) Równolegle wyślij do Google Apps Script (Drive)
+    const googlePayload = {
+      fileName: file.name,
+      mimeType: file.type || "application/octet-stream",
+      base64Data,
+      subfolder,
+    }
+
     const googlePromise = fetch(GOOGLE_SCRIPT_URL, {
       method: "POST",
       headers: {
